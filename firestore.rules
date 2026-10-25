@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny all unknown collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\.]+$');
+    }
+
+    function isValidDai(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.nama is string && data.nama.size() > 0 && data.nama.size() <= 500
+        && (!('telepon' in data) || (data.telepon is string && data.telepon.size() <= 100))
+        && (!('asalDaerah' in data) || (data.asalDaerah is string && data.asalDaerah.size() <= 500))
+        && (!('provinsi' in data) || (data.provinsi is string && data.provinsi.size() <= 500))
+        && (!('titikDakwah' in data) || (data.titikDakwah is string && data.titikDakwah.size() <= 500));
+    }
+
+    function isValidKorwil(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.namaWilayah is string && data.namaWilayah.size() <= 500
+        && data.namaKoordinator is string && data.namaKoordinator.size() <= 500;
+    }
+
+    // Ping / test connection probe
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Koleksi Da'i Utusan (sinkronisasi real-time lintas perangkat)
+    match /dai_utusan/{daiId} {
+      allow read: if true;
+      allow create, update: if isValidId(daiId) && isValidDai(request.resource.data);
+      allow delete: if isValidId(daiId);
+    }
+
+    // Koleksi Koordinator Wilayah
+    match /korwil/{korwilId} {
+      allow read: if true;
+      allow create, update: if isValidId(korwilId) && isValidKorwil(request.resource.data);
+      allow delete: if isValidId(korwilId);
+    }
+  }
+}
+

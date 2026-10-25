@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "dai_utusan": {
+      "title": "DaiUtusan",
+      "description": "Data profil dan penugasan da'i utusan wilayah 3T nusantara",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID unik da'i" },
+        "nama": { "type": "string", "description": "Nama lengkap da'i" },
+        "gelar": { "type": "string", "description": "Gelar akademis/keagamaan" },
+        "telepon": { "type": "string", "description": "Nomor kontak telepon/WhatsApp" },
+        "asalDaerah": { "type": "string", "description": "Asal daerah atau kota asal pengutus" },
+        "asalLembaga": { "type": "string", "description": "Nama lembaga atau pesantren pengutus" },
+        "pulau": { "type": "string", "description": "Pulau penugasan" },
+        "provinsi": { "type": "string", "description": "Provinsi tempat diutus" },
+        "kabupaten": { "type": "string", "description": "Kabupaten penugasan" },
+        "kecamatan": { "type": "string", "description": "Kecamatan penugasan" },
+        "titikDakwah": { "type": "string", "description": "Nama desa/posko titik dakwah" },
+        "kategoriWilayah": { "type": "string", "description": "Kategori wilayah penugasan" },
+        "tanggalMulaiTugas": { "type": "string", "description": "Tanggal mulai penugasan" },
+        "durasiKontrakBulan": { "type": "number", "description": "Durasi kontrak dalam bulan" },
+        "statusTugas": { "type": "string", "description": "Status tugas operasional" },
+        "programFokus": { "type": "array", "description": "Daftar program fokus dakwah" },
+        "dana": { "type": "object", "description": "Alokasi dan status kafalah/operasional" },
+        "tren": { "type": "object", "description": "Data statistik pertumbuhan jamaah" },
+        "updatedAt": { "type": "string", "description": "Waktu terakhir pembaruan data" }
+      },
+      "required": ["id", "nama", "asalDaerah", "provinsi", "titikDakwah"]
+    },
+    "korwil": {
+      "title": "Korwil",
+      "description": "Data koordinator wilayah komando da'i",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID unik korwil" },
+        "kodeWilayah": { "type": "string", "description": "Kode wilayah operasional" },
+        "namaWilayah": { "type": "string", "description": "Nama cakupan wilayah" },
+        "namaKoordinator": { "type": "string", "description": "Nama lengkap koordinator wilayah" },
+        "gelar": { "type": "string", "description": "Gelar koordinator" },
+        "telepon": { "type": "string", "description": "Nomor kontak darurat/satelit" },
+        "email": { "type": "string", "description": "Email resmi posko" },
+        "poskoInduk": { "type": "string", "description": "Lokasi posko induk" },
+        "provinsiCakupan": { "type": "array", "description": "Daftar provinsi supervisi" },
+        "jumlahDaiSupervisi": { "type": "number", "description": "Jumlah da'i yang disupervisi" },
+        "jumlahTitik3T": { "type": "number", "description": "Jumlah titik 3T di bawah komando" },
+        "frekuensiLaporan": { "type": "string", "description": "Frekuensi jadwal briefing/laporan" },
+        "kanalKomunikasi": { "type": "string", "description": "Jalur komunikasi utama" },
+        "statusOperasional": { "type": "string", "description": "Status kesiapsiagaan operasional" },
+        "fokusStrategis": { "type": "string", "description": "Fokus strategi dakwah daerah" },
+        "updatedAt": { "type": "string", "description": "Waktu terakhir pembaruan data" }
+      },
+      "required": ["id", "kodeWilayah", "namaWilayah", "namaKoordinator"]
+    }
+  },
+  "firestore": {
+    "/dai_utusan/{daiId}": {
+      "schema": { "$ref": "#/entities/dai_utusan" },
+      "description": "Koleksi data seluruh Da'i Utusan Indonesia yang tersinkronisasi secara real-time"
+    },
+    "/korwil/{korwilId}": {
+      "schema": { "$ref": "#/entities/korwil" },
+      "description": "Koleksi data Koordinator Wilayah (Korwil) komando nusantara"
+    }
+  }
+}

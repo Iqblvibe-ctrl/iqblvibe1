@@ -1,0 +1,8 @@
+{
+  "name": "SIDAU NUSANTARA - Portofolio Koordinator Nasional",
+  "description": "Kerangka visual dan UI portofolio koordinator nasional dengan peta interaktif Indonesia, 3 metrik KPI kinerja, dan metode koordinasi komunikasi harian.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
